@@ -1,4 +1,4 @@
-package com.pm.requestdemo
+package com.pm.requestdemo.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -7,13 +7,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.pm.requestdemo.MovieViewModel
+import com.pm.requestdemo.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: EmployeeViewModel
+    private lateinit var viewModel: MovieViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -26,12 +28,7 @@ class MainActivity : AppCompatActivity() {
                 layoutManager.orientation)
         recyclerview.addItemDecoration(dividerItemDecoration)
 
-        /*button.setOnClickListener {
-            Log.d("Sometag", "Clicked")
-            //makeRequest()
-        }*/
-
-        viewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
         viewModel.liveData.observe(this,
             Observer { items ->
                 Log.d(TAG, "Have items from ViewModel $items")

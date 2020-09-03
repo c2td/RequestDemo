@@ -2,12 +2,14 @@ package com.pm.requestdemo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.pm.requestdemo.data.Movie
+import com.pm.requestdemo.data.Repository
 
-class EmployeeViewModel : ViewModel() {
+class MovieViewModel : ViewModel() {
 
     private val repository = Repository()
 
-    val liveData : LiveData<List<Employee>> = repository.fetchContents()
+    val liveData : LiveData<List<Movie>> = repository.fetchContents()
 
     override fun onCleared() {
         super.onCleared()

@@ -5,7 +5,7 @@ import retrofit2.http.GET
 
 interface RequestApi {
 
-    @GET("employees")
-    fun fetchData(): Call<EmployeeResponse>
-    //fun fetchData(): Call<RequestResponse>
+    @GET("movie?api_key=5680c63c995f784e60bf474f1aec61c0") //TODO improve
+    fun fetchData(): Call<MovieResponse>;
+
 }

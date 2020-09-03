@@ -1,10 +1,10 @@
-package com.pm.requestdemo
+package com.pm.requestdemo.data
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pm.requestdemo.api.RequestApi
-import com.pm.requestdemo.api.EmployeeResponse
+import com.pm.requestdemo.api.MovieResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,37 +16,36 @@ private const val TAG = "Repository"
 class Repository {
 
     private val requestApi: RequestApi
-    private lateinit var request: Call<EmployeeResponse>
+    private lateinit var request: Call<MovieResponse>
 
     init {
         val retrofit: Retrofit = Retrofit.Builder()
-            //.baseUrl("https://navneet7k.github.io/")
-            .baseUrl("http://dummy.restapiexample.com/api/v1/")
+            .baseUrl("https://api.themoviedb.org/3/discover/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         requestApi = retrofit.create(RequestApi::class.java)
     }
 
-    fun fetchContents(): LiveData<List<Employee>> {
+    fun fetchContents(): LiveData<List<Movie>> {
 
-        val responseLiveData: MutableLiveData<List<Employee>> = MutableLiveData()
-        val request: Call<EmployeeResponse> = requestApi.fetchData()
+        val responseLiveData: MutableLiveData<List<Movie>> = MutableLiveData()
+        val request: Call<MovieResponse> = requestApi.fetchData()
 
-        request.enqueue(object : Callback<EmployeeResponse> {
+        request.enqueue(object : Callback<MovieResponse> {
 
-            override fun onFailure(call: Call<EmployeeResponse>, t: Throwable) {
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 Log.e(TAG, "Failed to fetch data", t)
             }
 
             override fun onResponse(
-                call: Call<EmployeeResponse>,
-                response: Response<EmployeeResponse>
+                call: Call<MovieResponse>,
+                response: Response<MovieResponse>
             ) {
                 Log.d(TAG, "Response received")
-                val requestResponse: EmployeeResponse? = response.body()
-                val employees: List<Employee> = requestResponse?.employees ?: mutableListOf()
-                responseLiveData.value = employees
+                val requestResponse: MovieResponse? = response.body()
+                val movies: List<Movie> = requestResponse?.movies ?: mutableListOf()
+                responseLiveData.value = movies
             }
         })
         return responseLiveData
